@@ -1,12 +1,20 @@
+//Can impliment a failed attemps timer (after so many failed attemps you will be locked out of the login page)
+//can impliment hidden text in textboxes
+//TODO array credentials gets reset after screen change
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
 import javax.swing.*;
 
-public class LoginScreen extends JFrame {
+public class LoginScreen extends JFrame{
 
     public LoginScreen() {
         super();
@@ -25,7 +33,7 @@ public class LoginScreen extends JFrame {
 
             //Title Panel
             JPanel titlePanel = new JPanel();
-            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 90));
+            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 80));
 
             JLabel titleLabel = new JLabel("Welcome!");
             titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
@@ -37,16 +45,16 @@ public class LoginScreen extends JFrame {
             JPanel usernamePanel = new JPanel();
             usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 110));
 
-            JLabel usernameTextLabel = new JLabel("Username:");
-            usernameTextLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
-
-            JTextField usernameLabel = new JTextField("U");
+            JLabel usernameLabel = new JLabel("Username:");
             usernameLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
-            usernamePanel.add(usernameTextLabel);
+            JTextField usernameTextField = new JTextField("Username");
+            usernameTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
+            usernameTextField.setPreferredSize(new Dimension(153,37));
+            usernameTextField.setForeground(Color.GRAY);
 
             usernamePanel.add(usernameLabel);
-
+            usernamePanel.add(usernameTextField);
             mainPanel.add(usernamePanel);
 
             //Password Panel
@@ -56,11 +64,14 @@ public class LoginScreen extends JFrame {
             JLabel passwordLabel = new JLabel("Password:");
             passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
-            JTextField passwordTextLabel = new JTextField("P");
-            passwordTextLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+            JTextField passwordTextField = new JTextField("Password");
+            passwordTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
+            passwordTextField.setPreferredSize(new Dimension(155,35));
+            passwordTextField.setForeground(Color.GRAY);
+
 
             passwordPanel.add(passwordLabel);
-            passwordPanel.add(passwordTextLabel);
+            passwordPanel.add(passwordTextField);
 
             mainPanel.add(passwordPanel);
 
@@ -79,34 +90,44 @@ public class LoginScreen extends JFrame {
         content.add(mainPanel, BorderLayout.CENTER);
         
         //LoginButton
-        JPanel southPanel = new JPanel();
-        southPanel.setLayout(new GridBagLayout());
-        JPanel centeringPanel = new JPanel();
-        centeringPanel.setBackground(white);
-        centeringPanel.setLayout(new GridBagLayout());
-        centeringPanel.setBorder(BorderFactory.createLineBorder(white,10,true));
-        centeringPanel.add(southPanel);
+
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setBackground(white);
+        buttonsPanel.setLayout(new GridBagLayout());
+        buttonsPanel.setBorder(BorderFactory.createLineBorder(white,10,true));
         
         JButton LoginButton = new JButton("Login");
         LoginButton.setBackground(white);
         LoginButton.addActionListener(e -> {
-            if(passwordTextLabel.getText().equals("hello")){
-                new StarterFrame();
-                this.dispose();
-            }else{
-                incorrectLabel.setVisible(true);
+            for(CredentialsObj credentialsObj : RegisterScreen.getCredentials()) {
+                if (usernameTextField.getText().equals(credentialsObj.getUsername()) && passwordTextField.getText().equals(credentialsObj.getPassword())){
+                    new StarterFrame();
+                    this.dispose();
+                }
             }
+            incorrectLabel.setVisible(true);
         });
 
+        //RegisterButton
+        JButton RegisterButton = new JButton("Register");
+        RegisterButton.setBackground(white);
+        RegisterButton.addActionListener(e -> {
+            new RegisterScreen();
+            this.dispose();
+        });
+        
 
 
-
-        southPanel.add(LoginButton);
-        content.add(centeringPanel, BorderLayout.SOUTH);
+        buttonsPanel.add(RegisterButton);
+        buttonsPanel.add(LoginButton);
+        content.add(buttonsPanel, BorderLayout.SOUTH);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700,700);
         this.setLocation(800,50);
         this.setVisible(true);
     }
+
+
+
 }
