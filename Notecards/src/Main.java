@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Main {
     private static ArrayList<cardObj> notecardList = new ArrayList<>();
+
     private static ArrayList<CredentialsObj> credentialsList = new ArrayList<CredentialsObj>();
 
     private final String CREDENTIALS_PATH = "./credentials.json";
@@ -15,6 +16,7 @@ public class Main {
         // credentialsList = IOUtils.loadCredentials(CREDENTIALS_PATH)
     }
 
+
     public static void addCredentials(CredentialsObj a){
         credentialsList.add(a);
     }
@@ -23,14 +25,18 @@ public class Main {
         notecardList.add(c);
 
 
+        
         for(int i = 0; i <= notecardList.size()-1; i++){
             System.out.println("------------------------");
-            System.out.println(notecardList.get(i).question);
-            System.out.println(notecardList.get(i).answer);
+            System.out.println(notecardList.get(i).getQuestion());
+            System.out.println(notecardList.get(i).getAnswer());
+
         }
 
     }
     public static ArrayList<cardObj> getNotecardList() {
         return notecardList;
     }
+
 }
+

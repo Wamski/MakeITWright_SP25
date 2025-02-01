@@ -14,12 +14,15 @@ public class StarterFrame extends JFrame {
         this.setVisible(true);
         //ex:
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        content.add(panel, BorderLayout.CENTER);
-        JButton btn = new CreateBtn();
+        //JPanel panel = new JPanel();
+        //panel.setLayout(new GridBagLayout());
+        //content.add(panel, BorderLayout.CENTER);
+        //JButton btn = new CreateBtn();
 
-        panel.add(btn);
+        //panel.add(btn);
+
+        EditSetScreen ESS = new EditSetScreen(content);
+
         content.repaint();
         content.revalidate();
 
