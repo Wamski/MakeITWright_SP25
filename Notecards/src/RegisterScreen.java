@@ -1,3 +1,4 @@
+
 //TODO array credentials gets reset after screen change
 
 
@@ -8,13 +9,19 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
-public class RegisterScreen extends JFrame {
+public class RegisterScreen extends JFrame implements FocusListener {
 
     public static ArrayList<CredentialsObj> credentials = new ArrayList<CredentialsObj>();
+    private JTextField usernameTextField;
+    private JTextField passwordTextField;
+    private JTextField confirmationTextField;
 
     public RegisterScreen() {
         super();
@@ -30,12 +37,16 @@ public class RegisterScreen extends JFrame {
 
         //Main Panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(4,1));
+
+        mainPanel.setLayout(new GridLayout(5,1));
+
         mainPanel.setBackground(white);
 
             //Title Panel
             JPanel titlePanel = new JPanel();
-            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 80));
+
+            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45));
+
 
             JLabel titleLabel = new JLabel("Sign Up!");
             titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
@@ -45,14 +56,19 @@ public class RegisterScreen extends JFrame {
 
             //Username Panel
             JPanel usernamePanel = new JPanel();
-            usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 110));
+
+            usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
+
 
             JLabel usernameLabel = new JLabel("Username:");
             usernameLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
-            JTextField usernameTextField = new JTextField("Username");
+
+            usernameTextField = new JTextField("Username");
             usernameTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
             usernameTextField.setPreferredSize(new Dimension(153,37));
+            usernameTextField.setForeground(Color.GRAY);
+            usernameTextField.addFocusListener(this);
 
 
             usernamePanel.add(usernameLabel);
@@ -61,19 +77,43 @@ public class RegisterScreen extends JFrame {
 
             //Password Panel
             JPanel passwordPanel = new JPanel();
-            passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+            passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
 
             JLabel passwordLabel = new JLabel("Password:");
             passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
-            JTextField passwordTextField = new JTextField("Password");
+
+            passwordTextField = new JTextField("Password");
             passwordTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
             passwordTextField.setPreferredSize(new Dimension(155,35));
+            passwordTextField.setForeground(Color.GRAY);
+            passwordTextField.addFocusListener(this);
+
 
             passwordPanel.add(passwordLabel);
             passwordPanel.add(passwordTextField);
 
             mainPanel.add(passwordPanel);
+
+
+            //Confirmation Panel
+            JPanel confirmationPanel = new JPanel();
+            confirmationPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+
+            JLabel confirmationLabel = new JLabel("Confirmation:");
+            confirmationLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
+            confirmationTextField = new JTextField("Password");
+            confirmationTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
+            confirmationTextField.setPreferredSize(new Dimension(155,35));
+            confirmationTextField.setForeground(Color.GRAY);
+            confirmationTextField.addFocusListener(this);
+
+            confirmationPanel.add(confirmationLabel);
+            confirmationPanel.add(confirmationTextField);
+
+            mainPanel.add(confirmationPanel);
 
             //Incorrect Panel
             JPanel incorrectPanel = new JPanel();
@@ -109,6 +149,16 @@ public class RegisterScreen extends JFrame {
                 }else if(passwordTextField.getText().equals("")){
                     incorrectLabel.setText("Please enter a password");
                     incorrectLabel.setVisible(true);
+
+                //if confirmation is blank
+                }else if(confirmationTextField.getText().equals("")){
+                    incorrectLabel.setText("Please enter a confirmation");
+                    incorrectLabel.setVisible(true);
+                //if confirmation does not match password
+                }else if(!(confirmationTextField.getText().equals(passwordTextField.getText()))){
+                    incorrectLabel.setText("Please enter the same password in the password box as the confirmation box");
+                    incorrectLabel.setVisible(true);
+
                 //if username is less than 8 characters
                 }else if(usernameTextField.getText().length() < 8){
                         incorrectLabel.setText("Username must be at least 8 characters long");
@@ -165,4 +215,46 @@ public class RegisterScreen extends JFrame {
     public static ArrayList<CredentialsObj> getCredentials() {
         return credentials;
     }
+
+
+    @Override
+    public void focusGained(FocusEvent e) {
+        if (e.getSource() == passwordTextField) {
+            if (passwordTextField.getText().equals("Password")) {
+                passwordTextField.setText(""); // Clear placeholder text
+                passwordTextField.setForeground(Color.BLACK); // Change text color to black
+            }
+        } else if (e.getSource() == usernameTextField) {
+            if (usernameTextField.getText().equals("Username")) {
+                usernameTextField.setText("");
+                usernameTextField.setForeground(Color.BLACK);
+            }
+        } else if (e.getSource() == confirmationTextField) {
+            if (confirmationTextField.getText().equals("Confirmation")) {
+                confirmationTextField.setText("");
+                confirmationTextField.setForeground(Color.BLACK);
+            }
+        }
+    }
+
+    @Override
+    public void focusLost(FocusEvent e) {
+        if (e.getSource() == passwordTextField) {
+            if (passwordTextField.getText().isEmpty()) {
+                passwordTextField.setText("Password"); // Reset placeholder text if the field is empty
+                passwordTextField.setForeground(Color.GRAY); // Change text color back to gray
+            }
+        } else if (e.getSource() == usernameTextField) {
+            if (usernameTextField.getText().isEmpty()) {
+                usernameTextField.setText("Username");
+                usernameTextField.setForeground(Color.GRAY);
+            }
+        } else if (e.getSource() == confirmationTextField) {
+            if (confirmationTextField.getText().isEmpty()) {
+                confirmationTextField.setText("Confirmation");
+                confirmationTextField.setForeground(Color.GRAY);
+            }
+        }
+    }
+
 }

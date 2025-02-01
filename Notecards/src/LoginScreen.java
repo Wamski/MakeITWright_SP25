@@ -1,4 +1,6 @@
 //Can impliment a failed attemps timer (after so many failed attemps you will be locked out of the login page)
+
+//can impliment hidden text in textboxes
 //TODO array credentials gets reset after screen change
 
 
@@ -10,9 +12,13 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+
+
 import javax.swing.*;
 
-public class LoginScreen extends JFrame {
+public class LoginScreen extends JFrame{
 
     public LoginScreen() {
         super();
@@ -116,6 +122,7 @@ public class LoginScreen extends JFrame {
         });
 
 
+
         buttonsPanel.add(RegisterButton);
         buttonsPanel.add(LoginButton);
         content.add(buttonsPanel, BorderLayout.SOUTH);
@@ -125,4 +132,7 @@ public class LoginScreen extends JFrame {
         this.setLocation(800,50);
         this.setVisible(true);
     }
+
+
+
 }
