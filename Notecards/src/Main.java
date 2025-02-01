@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
     private static ArrayList<cardObj> list = new ArrayList<>();
     public static void main(String[] args) {
-        StarterFrame window = new StarterFrame();
+        LoginScreen window = new LoginScreen();
         /* List of card objs that is empty till
         it reads from a file
          */
