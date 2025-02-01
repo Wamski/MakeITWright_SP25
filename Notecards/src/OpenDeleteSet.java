@@ -2,58 +2,57 @@ import javax.swing.*;
 import java.awt.*;
 
 public class OpenDeleteSet extends JFrame {
-    public OpenDeleteSet(){
+    public OpenDeleteSet(String openOrDelete){
         super();
-        JPanel content = new JPanel();
-        content.setLayout(new BorderLayout());
+        JPanel content = new JPanel(new BorderLayout());
         this.setContentPane(content);
 
-        JPanel internalPanel = new JPanel();
-        internalPanel.setLayout(new BorderLayout());
+        JPanel internalPanel = new JPanel(new BorderLayout());
         content.add(internalPanel, BorderLayout.CENTER);
-        internalPanel.setBorder(BorderFactory.createLineBorder(Color.GRAY,10,true));
 
-        //JPanel northPanel = new JPanel();
-        internalPanel.setLayout(new BorderLayout());
+        // North Panel
         JPanel northPanel = new JPanel(new BorderLayout());
+        internalPanel.add(northPanel, BorderLayout.NORTH);
+        northPanel.add(new SettingsUtil(this), BorderLayout.WEST);
 
+        // Center Panel
+        JPanel selectPanel = new JPanel(new GridBagLayout()); // Center components properly
+        internalPanel.add(selectPanel, BorderLayout.CENTER);
 
-        //settings
-        JMenuBar menuBar = new JMenuBar();
-        JMenu settingsMenu = new JMenu("Settings");
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10); // Adds spacing
+        gbc.anchor = GridBagConstraints.CENTER;
 
-        JMenuItem newSet = new JMenuItem("New Set");
-        newSet.addActionListener(e -> {System.out.println("newSet");}); // FIXME
-        JMenuItem openSet = new JMenuItem("Open Set");
-        openSet.addActionListener(e -> {System.out.println("openSet");}); // FIXME
-        JMenuItem deleteSet = new JMenuItem("Delete Set");
-        deleteSet.addActionListener(e -> {System.out.println("deleteSet");}); // FIXME
-        JMenuItem logout = new JMenuItem("Logout");
-        logout.addActionListener(e -> {System.out.println("logout");}); // FIXME
+        JLabel selectLabel = new JLabel("Select a Set to " + openOrDelete);
+        selectLabel.setFont(new Font("Arial", Font.PLAIN, 60));
+        selectPanel.add(selectLabel, gbc);
 
-        settingsMenu.add(newSet);
-        settingsMenu.add(openSet);
-        settingsMenu.add(deleteSet);
-        settingsMenu.addSeparator(); 
-        settingsMenu.add(logout);
+        // Drop-down Menu for File Selection
+        gbc.gridy = 1; // Move to next row
+        String[] exampleFiles = {"Set1.json", "Set2.json", "Set3.json"}; // TODO: Example file names. Read from user's files
+        JComboBox<String> fileDropdown = new JComboBox<>(exampleFiles);
+        fileDropdown.setFont(new Font("Arial", Font.PLAIN, 20));
+        selectPanel.add(fileDropdown, gbc);
 
-        menuBar.add(settingsMenu);
-        menuBar.setBackground(Color.WHITE);
-        northPanel.add(menuBar, BorderLayout.WEST);
+        // South Panel
+        JPanel southPanel = new JPanel();
+        internalPanel.add(southPanel, BorderLayout.SOUTH);
 
+        JButton confirmButton = new JButton(openOrDelete);
+        confirmButton.setPreferredSize(new Dimension(150, 50));
+        confirmButton.setFont(new Font("Arial", Font.PLAIN, 25));
+        southPanel.add(confirmButton);
 
-        add(northPanel, BorderLayout.NORTH);
-
-        JPanel selectPanel = new JPanel();
-        JLabel selectLabel = new JLabel("Select a Set to Open");
-
-        selectPanel.add(selectLabel, BorderLayout.CENTER);
-        internalPanel.add(selectPanel, BorderLayout.NORTH);
-
+        confirmButton.addActionListener(e -> {
+            this.dispose();
+            SettingsUtil.newSet((String) fileDropdown.getSelectedItem());
+        });
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(700,700);
-        this.setLocation(800,50);
+        this.setSize(700, 700);
+        this.setLocation(800, 50);
         this.setVisible(true);
     }
 }

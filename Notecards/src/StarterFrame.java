@@ -21,7 +21,7 @@ public class StarterFrame extends JFrame {
 
         //panel.add(btn);
 
-        EditSetScreen ESS = new EditSetScreen(content);
+        //EditSetScreen ESS = new EditSetScreen(content);
 
         content.repaint();
         content.revalidate();

@@ -121,7 +121,7 @@ public class LoginScreen extends JFrame implements FocusListener{
         LoginButton.addActionListener(e -> {
             for(CredentialsObj credentialsObj : RegisterScreen.getCredentials()) {
                 if (usernameTextField.getText().equals(credentialsObj.getUsername()) && passwordTextField.getText().equals(credentialsObj.getPassword())){
-                    new StarterFrame();
+                    new OpenDeleteSet("Open");
                     this.dispose();
                 }
             }

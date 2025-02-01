@@ -1,12 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class EditSetScreen {
+public class EditSetScreen extends JFrame {
     private int currentIndex = 0;
 
-    public EditSetScreen(JPanel content){
-
-        System.out.println(Main.getNotecardList().size());
+    public EditSetScreen(String setTitle) {
+        super();
+        JPanel content = new JPanel();
+        content.setLayout(new BorderLayout());
+        this.setContentPane(content);
 
         JPanel editScreenPanel = new JPanel();
         editScreenPanel.setLayout(new BorderLayout());
@@ -21,7 +23,7 @@ public class EditSetScreen {
         eastButton.addActionListener(e -> { updateCardOrder("addition"); });
         editScreenPanel.add(eastButton, BorderLayout.EAST);
 
-        // West Panel 
+        // West Panel
         JButton westButton = new JButton("<");
         westButton.setFont(new Font("Arial", Font.PLAIN, 80));
         westButton.setPreferredSize(new Dimension(100, 500));
@@ -33,36 +35,17 @@ public class EditSetScreen {
         // North panel
         JPanel northPanel = new JPanel(new BorderLayout());
         editScreenPanel.add(northPanel, BorderLayout.NORTH);
+        northPanel.add(new SettingsUtil(this), BorderLayout.WEST);
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu settingsMenu = new JMenu("Settings");
-
-        JMenuItem newSet = new JMenuItem("New Set");
-        newSet.addActionListener(e -> {System.out.println("newSet");}); // FIXME
-        JMenuItem openSet = new JMenuItem("Open Set");
-        openSet.addActionListener(e -> {System.out.println("openSet");}); // FIXME
-        JMenuItem deleteSet = new JMenuItem("Delete Set");
-        deleteSet.addActionListener(e -> {System.out.println("deleteSet");}); // FIXME
-        JMenuItem logout = new JMenuItem("Logout");
-        logout.addActionListener(e -> {System.out.println("logout");}); // FIXME
-
-        settingsMenu.add(newSet);
-        settingsMenu.add(openSet);
-        settingsMenu.add(deleteSet);
-        settingsMenu.addSeparator();
-        settingsMenu.add(logout);
-
-        menuBar.add(settingsMenu);
-        menuBar.setBackground(Color.WHITE);
-        northPanel.add(menuBar, BorderLayout.WEST);
-
-        JLabel titleLabel = new JLabel("Set Title", SwingConstants.CENTER);
-        titleLabel.setBackground(Color.BLUE);
+        JLabel titleLabel = new JLabel(setTitle, SwingConstants.CENTER);
+        titleLabel.setBackground(Color.WHITE);
+        titleLabel.setOpaque(true);
         northPanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Delete if necessary. Can/should be replaced by "Quiz Me" button in the future 
+        // Delete if necessary. Can/should be replaced by "Quiz Me" button in the future
         JLabel otherLabel = new JLabel("                   ", SwingConstants.CENTER);
-        otherLabel.setBackground(Color.BLUE);
+        otherLabel.setBackground(Color.WHITE);
+        otherLabel.setOpaque(true); // <-- This makes the background color visible
         northPanel.add(otherLabel, BorderLayout.EAST);
 
         // South Panel
@@ -155,13 +138,13 @@ public class EditSetScreen {
             }
         });
 
-        // Center Panel 
+        // Center Panel
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
         editScreenPanel.add(centerPanel, BorderLayout.CENTER);
         centerPanel.setBackground(Color.GREEN);
 
-        // TODO: Add notecards to the screen 
+        // TODO: Add notecards to the screen
         JPanel innerCenterPanel = new JPanel();
         innerCenterPanel.setLayout(new BorderLayout());
         editScreenPanel.add(innerCenterPanel, BorderLayout.CENTER);
@@ -169,6 +152,11 @@ public class EditSetScreen {
 
         content.repaint();
         content.revalidate();
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(700, 700);
+        this.setLocation(800, 50);
+        this.setVisible(true);
 
     }
 
@@ -185,7 +173,6 @@ public class EditSetScreen {
                 case "addition": currentIndex = (currentIndex + 1) % Main.getNotecardList().size(); break;
                 default: throw new IllegalStateException("You coded this wrong dingus!!!");
             }
-            // displayNotecard();
         }
     }
 
