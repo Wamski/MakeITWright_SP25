@@ -3,25 +3,29 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
-    private static ArrayList<cardObj> list = new ArrayList<>();
+    private static ArrayList<cardObj> notecardList = new ArrayList<>();
+    private final String CREDENTIALS_PATH = "./credentials.json";
     public static void main(String[] args) {
-        LoginScreen window = new LoginScreen();
-        /* List of card objs that is empty till
-        it reads from a file
-         */
-
+        //LoginScreen window = new LoginScreen();
+        StarterFrame SF = new StarterFrame();
+        // TODO: List of card objs that is empty till it reads from a file
+        // notecardList = IOUtils.loadNotecards(null);
+        // credentialsList = IOUtils.loadCredentials(CREDENTIALS_PATH)
 
     }
     public static void addToList(cardObj c){
-        list.add(c);
+        notecardList.add(c);
 
         
-        for(int i = 0; i <= list.size()-1; i++){
+        for(int i = 0; i <= notecardList.size()-1; i++){
             System.out.println("------------------------");
-            System.out.println(list.get(i).question);
-            System.out.println(list.get(i).answer);
+            System.out.println(notecardList.get(i).getQuestion());
+            System.out.println(notecardList.get(i).getAnswer());
         }
-        
-    }
 
+    }
+    public static ArrayList<cardObj> getNotecardList() {
+        return notecardList;
+    }
 }
+
