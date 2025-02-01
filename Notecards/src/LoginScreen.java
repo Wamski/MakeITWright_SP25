@@ -1,5 +1,3 @@
-//Can impliment a failed attemps timer (after so many failed attemps you will be locked out of the login page)
-//TODO array credentials gets reset after screen change
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,16 +23,28 @@ public class LoginScreen extends JFrame implements FocusListener{
 
         //Colors
         Color white = new Color(244, 238, 255);
-        Color peach = new Color(233,156,134);
+
+        Color blue5 = new Color(0,59,92);
+        Color blue4 = new Color(0,91,115);
+        Color blue3 = new Color(0,122,142);
+        Color blue2 = new Color(0,153,179);
+        Color blue1 = new Color(224,247,250);
+        Color yellow = new Color(241,212,161);
+
+
 
         //Main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(4,1));
-        mainPanel.setBackground(white);
+        mainPanel.setBackground(blue3);
+        content.setBackground(blue3);
+        mainPanel.setBorder(BorderFactory.createLineBorder(blue5,10,true));
+
 
         //Title Panel
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 80));
+        titlePanel.setBackground(blue3);
 
         JLabel titleLabel = new JLabel("Welcome!");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
@@ -45,9 +55,12 @@ public class LoginScreen extends JFrame implements FocusListener{
         //Username Panel
         JPanel usernamePanel = new JPanel();
         usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 110));
+        usernamePanel.setBackground(blue3);
+
 
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
 
         usernameTextField = new JTextField("Username");
         usernameTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -55,16 +68,21 @@ public class LoginScreen extends JFrame implements FocusListener{
         usernameTextField.setForeground(Color.GRAY);
         usernameTextField.addFocusListener(this);
 
+
         usernamePanel.add(usernameLabel);
         usernamePanel.add(usernameTextField);
         mainPanel.add(usernamePanel);
 
+
         //Password Panel
         JPanel passwordPanel = new JPanel();
-        passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 20));
+        passwordPanel.setBackground(blue3);
+
 
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
 
         passwordTextField = new JTextField("Password");
         passwordTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -82,22 +100,24 @@ public class LoginScreen extends JFrame implements FocusListener{
 
         JLabel incorrectLabel = new JLabel("Incorrect Username or Password");
         incorrectLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
-        incorrectLabel.setForeground(Color.RED);
+        incorrectLabel.setForeground(yellow);
         incorrectLabel.setVisible(false);
+        incorrectPanel.setBackground(blue3);
 
         incorrectPanel.add(incorrectLabel);
         mainPanel.add(incorrectPanel);
 
         content.add(mainPanel, BorderLayout.CENTER);
+        
 
         //LoginButton
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(white);
+        buttonsPanel.setBackground(blue3);
         buttonsPanel.setLayout(new GridBagLayout());
-        buttonsPanel.setBorder(BorderFactory.createLineBorder(white,10,true));
+
+        buttonsPanel.setBorder(BorderFactory.createLineBorder(blue5,10,true));
 
         JButton LoginButton = new JButton("Login");
-        LoginButton.setBackground(white);
         LoginButton.addActionListener(e -> {
             for(CredentialsObj credentialsObj : RegisterScreen.getCredentials()) {
                 if (usernameTextField.getText().equals(credentialsObj.getUsername()) && passwordTextField.getText().equals(credentialsObj.getPassword())){
@@ -110,12 +130,10 @@ public class LoginScreen extends JFrame implements FocusListener{
 
         //RegisterButton
         JButton RegisterButton = new JButton("Register");
-        RegisterButton.setBackground(white);
         RegisterButton.addActionListener(e -> {
             new RegisterScreen();
             this.dispose();
         });
-
 
         buttonsPanel.add(RegisterButton);
         buttonsPanel.add(LoginButton);
@@ -124,6 +142,7 @@ public class LoginScreen extends JFrame implements FocusListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700,700);
         this.setLocation(800,50);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
