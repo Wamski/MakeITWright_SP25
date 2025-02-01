@@ -36,7 +36,6 @@ public class RegisterScreen extends JFrame implements FocusListener {
         //Main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridLayout(5,1));
-
         mainPanel.setBackground(blue3);
         content.setBackground(blue3);
         mainPanel.setBorder(BorderFactory.createLineBorder(blue5,10,true));
@@ -46,10 +45,11 @@ public class RegisterScreen extends JFrame implements FocusListener {
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45));
         titlePanel.setBackground(blue3);
 
-
         JLabel titleLabel = new JLabel("Sign Up!");
         titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
 
+        titlePanel.add(titleLabel);
+        mainPanel.add(titlePanel);
 
         //Username Panel
         JPanel usernamePanel = new JPanel();
@@ -125,10 +125,9 @@ public class RegisterScreen extends JFrame implements FocusListener {
         JPanel buttonsPanel = new JPanel();
         buttonsPanel.setBackground(blue3);
         buttonsPanel.setLayout(new GridBagLayout());
-
         buttonsPanel.setBorder(BorderFactory.createLineBorder(blue5,10,true));
 
-        
+
         //RegisterButton
         JButton LoginButton = new JButton("Register");
         LoginButton.addActionListener(e -> {
@@ -137,11 +136,10 @@ public class RegisterScreen extends JFrame implements FocusListener {
             if(usernameTextField.getText().equals("")){
                 incorrectLabel.setText("Please enter a username");
                 incorrectLabel.setVisible(true);
-            //if password is blank
+                //if password is blank
             }else if(passwordTextField.getText().equals("")){
                 incorrectLabel.setText("Please enter a password");
                 incorrectLabel.setVisible(true);
-
                 //if confirmation is blank
             }else if(confirmationTextField.getText().equals("")){
                 incorrectLabel.setText("Please enter a confirmation");
@@ -150,7 +148,6 @@ public class RegisterScreen extends JFrame implements FocusListener {
             }else if(!(confirmationTextField.getText().equals(passwordTextField.getText()))){
                 incorrectLabel.setText("Passwords must match");
                 incorrectLabel.setVisible(true);
-
                 //if password is less than 8 characters
             }else if(passwordTextField.getText().length() < 8){
                 incorrectLabel.setText("Password must be at least 8 characters long");
@@ -161,27 +158,7 @@ public class RegisterScreen extends JFrame implements FocusListener {
                     if (usernameTextField.getText().equals(credentialsObj.getUsername())){
                         incorrectLabel.setText("Username already taken");
                         incorrectLabel.setVisible(true);
-
-                }else{
-                    //if username matches a taken username
-                    for(CredentialsObj credentialsObj : credentials) {
-                        if (usernameTextField.getText().equals(credentialsObj.getUsername())){
-                            incorrectLabel.setText("Username already taken");
-                            incorrectLabel.setVisible(true);
-                            taken = true;
-                        }
-                    }
-                    //otherwise make credential
-                    if(taken == false){
-                        CredentialsObj login = new CredentialsObj(usernameTextField.getText(), passwordTextField.getText());
-                        credentials.add(login);
-
-                        //credentials.addCredentials(login);
-
-                        incorrectLabel.setVisible(false);
-                        new LoginScreen();
-                        this.dispose();
-
+                        taken = true;
                     }
                 }
                 //otherwise make credential
@@ -189,12 +166,11 @@ public class RegisterScreen extends JFrame implements FocusListener {
                     CredentialsObj login = new CredentialsObj(usernameTextField.getText(), passwordTextField.getText());
                     credentials.add(login);
                     incorrectLabel.setVisible(false);
-                    //new LoginScreen();
-                    // this.dispose();
+                    new LoginScreen();
+                    this.dispose();
                 }
             }
         });
-
 
         //BackButton
         JButton BackButton = new JButton("Back");
@@ -202,7 +178,6 @@ public class RegisterScreen extends JFrame implements FocusListener {
             new LoginScreen();
             this.dispose();
         });
-
 
         buttonsPanel.add(BackButton);
         buttonsPanel.add(LoginButton);
@@ -221,12 +196,11 @@ public class RegisterScreen extends JFrame implements FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-        if(e.getSource() == passwordTextField) {
-            if(passwordTextField.getText().equals("Password")) {
+        if (e.getSource() == passwordTextField) {
+            if (passwordTextField.getText().equals("Password")) {
                 passwordTextField.setText(""); // Clear placeholder text
                 passwordTextField.setForeground(Color.BLACK); // Change text color to black
             }
-
         } else if (e.getSource() == usernameTextField) {
             if (usernameTextField.getText().equals("Username")) {
                 usernameTextField.setText(""); // Clear placeholder text
@@ -258,7 +232,7 @@ public class RegisterScreen extends JFrame implements FocusListener {
                 confirmationTextField.setForeground(Color.GRAY);
             }
         }else{
-            
+
         }
     }
 }
