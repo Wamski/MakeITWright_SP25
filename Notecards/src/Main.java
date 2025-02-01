@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 public class Main {
+    public static StarterFrame window;
     public static void main(String[] args) {
-        StarterFrame window = new StarterFrame();
+        window = new StarterFrame();
 
     }
 }
