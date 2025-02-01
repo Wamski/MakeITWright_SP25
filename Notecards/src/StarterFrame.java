@@ -10,7 +10,7 @@ public class StarterFrame extends JFrame {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700,700);
-        this.setLocation(800,50);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
         //ex:
 
