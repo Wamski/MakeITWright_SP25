@@ -15,13 +15,13 @@ public class Main {
     public static void addToList(cardObj c){
         list.add(c);
 
-        /*
+        
         for(int i = 0; i <= list.size()-1; i++){
             System.out.println("------------------------");
             System.out.println(list.get(i).question);
             System.out.println(list.get(i).answer);
         }
-         */
+         
     }
 
 }
