@@ -3,25 +3,34 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Main {
-    private static ArrayList<cardObj> list = new ArrayList<>();
+    private static ArrayList<cardObj> notecardList = new ArrayList<>();
+    private static ArrayList<CredentialsObj> credentialsList = new ArrayList<CredentialsObj>();
+
+    private final String CREDENTIALS_PATH = "./credentials.json";
     public static void main(String[] args) {
-        StarterFrame window = new StarterFrame();
-        /* List of card objs that is empty till
-        it reads from a file
-         */
-
-
+        LoginScreen window = new LoginScreen();
+        //SetEditor se = new
+        // TODO: List of card objs that is empty till it reads from a file
+        // notecardList = IOUtils.loadNotecards(null);
+        // credentialsList = IOUtils.loadCredentials(CREDENTIALS_PATH)
     }
+
+    public static void addCredentials(CredentialsObj a){
+        credentialsList.add(a);
+    }
+
     public static void addToList(cardObj c){
-        list.add(c);
+        notecardList.add(c);
 
-        
-        for(int i = 0; i <= list.size()-1; i++){
+
+        for(int i = 0; i <= notecardList.size()-1; i++){
             System.out.println("------------------------");
-            System.out.println(list.get(i).question);
-            System.out.println(list.get(i).answer);
+            System.out.println(notecardList.get(i).question);
+            System.out.println(notecardList.get(i).answer);
         }
-        
-    }
 
+    }
+    public static ArrayList<cardObj> getNotecardList() {
+        return notecardList;
+    }
 }
