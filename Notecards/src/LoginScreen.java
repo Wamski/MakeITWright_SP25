@@ -4,7 +4,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-
 import javax.swing.*;
 
 public class LoginScreen extends JFrame {
@@ -21,12 +20,12 @@ public class LoginScreen extends JFrame {
 
         //Main Panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new GridLayout(3,1));
+        mainPanel.setLayout(new GridLayout(4,1));
         mainPanel.setBackground(white);
 
             //Title Panel
             JPanel titlePanel = new JPanel();
-            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 130));
+            titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 90));
 
             JLabel titleLabel = new JLabel("Welcome!");
             titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
@@ -36,26 +35,49 @@ public class LoginScreen extends JFrame {
 
             //Username Panel
             JPanel usernamePanel = new JPanel();
-            usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 150));
+            usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 110));
 
-            JTextField usernameLabel = new JTextField("Username");
+            JLabel usernameTextLabel = new JLabel("Username:");
+            usernameTextLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
+            JTextField usernameLabel = new JTextField("U");
             usernameLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
+            usernamePanel.add(usernameTextLabel);
+
             usernamePanel.add(usernameLabel);
+
             mainPanel.add(usernamePanel);
 
             //Password Panel
             JPanel passwordPanel = new JPanel();
             passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
 
-            JTextField passwordLabel = new JTextField("Password");
+            JLabel passwordLabel = new JLabel("Password:");
             passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
 
+            JTextField passwordTextLabel = new JTextField("P");
+            passwordTextLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
             passwordPanel.add(passwordLabel);
+            passwordPanel.add(passwordTextLabel);
+
             mainPanel.add(passwordPanel);
 
-        content.add(mainPanel, BorderLayout.CENTER);
+            //Incorrect Panel
+            JPanel incorrectPanel = new JPanel();
+            incorrectPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 90));
+            
+            JLabel incorrectLabel = new JLabel("Incorrect Username or Password");
+            incorrectLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+            incorrectLabel.setForeground(Color.RED);
+            incorrectLabel.setVisible(false);
+            
+            incorrectPanel.add(incorrectLabel);
+            mainPanel.add(incorrectPanel);
 
+        content.add(mainPanel, BorderLayout.CENTER);
+        
         //LoginButton
         JPanel southPanel = new JPanel();
         southPanel.setLayout(new GridBagLayout());
@@ -65,10 +87,21 @@ public class LoginScreen extends JFrame {
         centeringPanel.setBorder(BorderFactory.createLineBorder(white,10,true));
         centeringPanel.add(southPanel);
         
-        JButton startButton = new JButton("Login");
-        startButton.setBackground(white);
-        southPanel.add(startButton);
+        JButton LoginButton = new JButton("Login");
+        LoginButton.setBackground(white);
+        LoginButton.addActionListener(e -> {
+            if(passwordTextLabel.getText().equals("hello")){
+                new StarterFrame();
+                this.dispose();
+            }else{
+                incorrectLabel.setVisible(true);
+            }
+        });
 
+
+
+
+        southPanel.add(LoginButton);
         content.add(centeringPanel, BorderLayout.SOUTH);
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
