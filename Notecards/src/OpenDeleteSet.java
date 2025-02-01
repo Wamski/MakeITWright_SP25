@@ -1,5 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.nio.file.DirectoryNotEmptyException;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class OpenDeleteSet extends JFrame {
     public OpenDeleteSet(String openOrDelete){
@@ -31,7 +37,8 @@ public class OpenDeleteSet extends JFrame {
 
         // Drop-down Menu for File Selection
         gbc.gridy = 1; // Move to next row
-        String[] exampleFiles = {"Set1.json", "Set2.json", "Set3.json"}; // TODO: Example file names. Read from user's files
+
+        String[] exampleFiles = {Main.getEXAMPLE_SET_PATH(), "Set2.txt", "Set3.txt"}; // TODO: Example file names. Read from user's files
         JComboBox<String> fileDropdown = new JComboBox<>(exampleFiles);
         fileDropdown.setFont(new Font("Arial", Font.PLAIN, 20));
         selectPanel.add(fileDropdown, gbc);
@@ -47,8 +54,34 @@ public class OpenDeleteSet extends JFrame {
 
         confirmButton.addActionListener(e -> {
             this.dispose();
-            SettingsUtil.newSet((String) fileDropdown.getSelectedItem());
+            if (openOrDelete.equalsIgnoreCase("open")) {
+                SettingsUtil.newSet((String) fileDropdown.getSelectedItem());
+            } 
+            else if (openOrDelete.equalsIgnoreCase("delete")) {
+                // Get the relative path from the dropdown
+                String relativePath = (String) fileDropdown.getSelectedItem();
+                
+                // Combine it with the current working directory to get the absolute path
+                Path absolutePath = Paths.get(System.getProperty("user.dir")).resolve(relativePath).toAbsolutePath();
+        
+                try {
+                    // Delete the file using the absolute path
+                    Files.delete(absolutePath);
+                    System.out.println("File deleted successfully.");
+                } 
+                catch (NoSuchFileException e1) {
+                    System.out.println("No such file exists.");
+                } 
+                catch (DirectoryNotEmptyException e2) {
+                    System.out.println("Directory is not empty.");
+                } 
+                catch (IOException e3) {
+                    System.out.println("Error deleting the file.");
+                }
+            }
         });
+        
+
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700, 700);

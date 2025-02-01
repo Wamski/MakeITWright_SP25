@@ -20,7 +20,8 @@ public class EditSetScreen extends JFrame {
         eastButton.setPreferredSize(new Dimension(100, 500));
         eastButton.setBackground(Color.WHITE);
         eastButton.setFocusPainted(false);
-        eastButton.addActionListener(e -> { updateCardOrder("addition"); });
+        eastButton.setBorder(null);
+        eastButton.addActionListener(e -> { updateCardOrder("addition"); editScreenPanel.repaint(); editScreenPanel.revalidate(); });
         editScreenPanel.add(eastButton, BorderLayout.EAST);
 
         // West Panel
@@ -29,7 +30,8 @@ public class EditSetScreen extends JFrame {
         westButton.setPreferredSize(new Dimension(100, 500));
         westButton.setBackground(Color.WHITE);
         westButton.setFocusPainted(false);
-        westButton.addActionListener(e -> { updateCardOrder("subtraction"); });
+        westButton.setBorder(null);
+        westButton.addActionListener(e -> { updateCardOrder("subtraction"); editScreenPanel.repaint(); editScreenPanel.revalidate(); });
         editScreenPanel.add(westButton, BorderLayout.WEST);
 
         // North panel
@@ -126,7 +128,7 @@ public class EditSetScreen extends JFrame {
             if (option == JOptionPane.OK_OPTION) {
                 String question = questionField.getText().trim();
                 String answer = answerField.getText().trim();
-
+                
                 if (!question.isEmpty() && !answer.isEmpty()) {
                     Main.addToList(new cardObj(question, answer));
                     // saveNotecards();
@@ -137,21 +139,79 @@ public class EditSetScreen extends JFrame {
                 }
             }
         });
-
+        
         // Center Panel
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new BorderLayout());
+        JPanel centerPanel = new JPanel(new GridBagLayout()); // Use GridBagLayout for centering
         editScreenPanel.add(centerPanel, BorderLayout.CENTER);
-        centerPanel.setBackground(Color.GREEN);
+        centerPanel.setBackground(Color.WHITE);
+        
+        // Label showing card number out of total cards
+        JLabel cardLabel = new JLabel("Card " + (currentIndex + 1) + " of " + Main.getNotecardList().size(), SwingConstants.CENTER);
+        cardLabel.setFont(new Font("Arial", Font.PLAIN, 20));
+        cardLabel.setBackground(Color.WHITE);
+        cardLabel.setOpaque(true);
+        cardLabel.setPreferredSize(new Dimension(200, 40));
+        // cardLabel.setMargin(new Insets(10, 10, 10, 10)); // Set margins
+        centerPanel.add(cardLabel, new GridBagConstraints());
+        
+        // Text Area for question/answer with wrapping and centering
+        JTextArea cardTextArea = new JTextArea();
+        cardTextArea.setWrapStyleWord(true);
+        cardTextArea.setLineWrap(true);
+        cardTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
+        cardTextArea.setEditable(false); 
+        cardTextArea.setBackground(Color.WHITE);
+        cardTextArea.setPreferredSize(new Dimension(400, 200));
+        cardTextArea.setMargin(new Insets(10, 20, 10, 20));
+        cardTextArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Creates a black border with thickness of 2        
+        cardTextArea.setCaretPosition(0);
+        cardTextArea.setAlignmentX(Component.CENTER_ALIGNMENT); // Horizontally center
+        centerPanel.add(cardTextArea, new GridBagConstraints());
+        
+        try {
+            cardTextArea.setText(Main.getNotecardList().get(currentIndex).getQuestion());
+        } 
+        catch (IndexOutOfBoundsException ioobe) {
+            cardTextArea.setText("Error: Could not retrieve question");
+        }
+        
+        // Toggle button for Question/Answer
+        JButton toggleButton = new JButton("Show Answer");
+        toggleButton.setFont(new Font("Arial", Font.PLAIN, 20));
+        toggleButton.setBackground(Color.WHITE);
+        toggleButton.setFocusPainted(false);
+        toggleButton.setPreferredSize(new Dimension(200, 50));
+        toggleButton.setMargin(new Insets(10, 20, 10, 20));
 
-        // TODO: Add notecards to the screen
-        JPanel innerCenterPanel = new JPanel();
-        innerCenterPanel.setLayout(new BorderLayout());
-        editScreenPanel.add(innerCenterPanel, BorderLayout.CENTER);
-        innerCenterPanel.setBackground(Color.GREEN);
+        toggleButton.addActionListener(e -> {
+            if (cardTextArea.getText().equals(Main.getNotecardList().get(currentIndex).getQuestion())) {
+                cardTextArea.setText(Main.getNotecardList().get(currentIndex).getAnswer()); 
+                toggleButton.setText("Show Question");
+            } 
+            else {
+                cardTextArea.setText(Main.getNotecardList().get(currentIndex).getQuestion()); 
+                toggleButton.setText("Show Answer");
+            }
+        });
+        centerPanel.add(toggleButton, new GridBagConstraints());
 
-        content.repaint();
-        content.revalidate();
+        // Centering the components using GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10); // Set padding around components
+        gbc.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(cardLabel, gbc);
+
+        gbc.gridy = 1; // Move to next row
+        centerPanel.add(cardTextArea, gbc);
+
+        gbc.gridy = 2; // Move to next row
+        centerPanel.add(toggleButton, gbc);
+
+        // Revalidate and repaint to ensure layout is updated
+        centerPanel.revalidate();
+        centerPanel.repaint();
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(700, 700);
@@ -161,7 +221,7 @@ public class EditSetScreen extends JFrame {
     }
 
     private void updateCardOrder(String operation) {
-        if (!Main.getNotecardList().isEmpty()) {
+        if (Main.getNotecardList().isEmpty()) {
             JOptionPane.showMessageDialog(null, "There are no notecards in the list!");
         }
         else if (Main.getNotecardList().size() == currentIndex) { // FIXME: what is this doing?
@@ -169,8 +229,8 @@ public class EditSetScreen extends JFrame {
         }
         else {
             switch (operation) {
-                case "subtraction": currentIndex = (currentIndex - 1) % Main.getNotecardList().size(); break;
-                case "addition": currentIndex = (currentIndex + 1) % Main.getNotecardList().size(); break;
+                case "subtraction": currentIndex--; System.out.println("sub"); break;
+                case "addition": currentIndex++; System.out.println("add"); break;
                 default: throw new IllegalStateException("You coded this wrong dingus!!!");
             }
         }

@@ -42,6 +42,7 @@ public class SettingsUtil extends JMenuBar {
                 JOptionPane.showMessageDialog(null, "Path field must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
+                IOUtils.readNotecards(path);
                 new EditSetScreen(path);
             }
         }
@@ -52,6 +53,7 @@ public class SettingsUtil extends JMenuBar {
             JOptionPane.showMessageDialog(null, "Path field must be filled!", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
+            IOUtils.readNotecards(path);
             new EditSetScreen(path);
         }
     }
