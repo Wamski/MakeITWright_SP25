@@ -17,7 +17,7 @@ public class StarterFrame extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         content.add(panel, BorderLayout.CENTER);
-        JButton btn = new CreateBtn(this);
+        JButton btn = new CreateBtn();
 
         panel.add(btn);
         content.repaint();

@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class CreateBtn extends JButton implements ActionListener  {
-    public ArrayList<cardObj> list = new ArrayList<>();
+
     CreateBtn(){
         super("Create");
         this.setSize(300,300);
@@ -18,7 +18,10 @@ public class CreateBtn extends JButton implements ActionListener  {
         // Get input from user for question and anser
         // create a new cardObj with those variables and
         // append to the arraylist
+        String question = JOptionPane.showInputDialog(null, "Enter the question:");
+        String answer = JOptionPane.showInputDialog(null, "Enter the answer:");
 
-
+        cardObj cO = new cardObj(question, answer);
+        Main.addToList(cO);
     }
 }
