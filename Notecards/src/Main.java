@@ -21,7 +21,7 @@ public class Main {
             System.out.println(list.get(i).question);
             System.out.println(list.get(i).answer);
         }
-         
+        
     }
 
 }
