@@ -11,10 +11,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        //LoginScreen window = new LoginScreen();
+        LoginScreen window = new LoginScreen();
         
-        IOUtils.readNotecards(EXAMPLE_SET_PATH);
-        EditSetScreen ess = new EditSetScreen(EXAMPLE_SET_PATH);
+        // IOUtils.readNotecards(EXAMPLE_SET_PATH);
+        // EditSetScreen ess = new EditSetScreen(EXAMPLE_SET_PATH);
         
         // TODO: List of card objs that is empty till it reads from a file
         // notecardList = IOUtils.loadNotecards(null);
