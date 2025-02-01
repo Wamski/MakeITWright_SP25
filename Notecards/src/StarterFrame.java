@@ -12,14 +12,9 @@ public class StarterFrame extends JFrame {
         this.setSize(700,700);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        //ex:
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout());
-        content.add(panel, BorderLayout.CENTER);
-        JButton btn = new CreateBtn();
+        // new EditSetScreen(content);
 
-        panel.add(btn);
         content.repaint();
         content.revalidate();
 
