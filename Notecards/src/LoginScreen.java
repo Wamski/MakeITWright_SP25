@@ -1,6 +1,8 @@
 //Can impliment a failed attemps timer (after so many failed attemps you will be locked out of the login page)
+
 //can impliment hidden text in textboxes
 //TODO array credentials gets reset after screen change
+
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -9,8 +11,10 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 
 import javax.swing.*;
 
@@ -25,6 +29,7 @@ public class LoginScreen extends JFrame{
         //Colors
         Color white = new Color(244, 238, 255);
         Color peach = new Color(233,156,134);
+        
 
         //Main Panel
         JPanel mainPanel = new JPanel();
@@ -115,7 +120,7 @@ public class LoginScreen extends JFrame{
             new RegisterScreen();
             this.dispose();
         });
-        
+
 
 
         buttonsPanel.add(RegisterButton);

@@ -1,4 +1,4 @@
-//focus on confirmation does not work??? (Small error somwehere)
+
 //TODO array credentials gets reset after screen change
 
 
@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
@@ -36,12 +37,16 @@ public class RegisterScreen extends JFrame implements FocusListener {
 
         //Main Panel
         JPanel mainPanel = new JPanel();
+
         mainPanel.setLayout(new GridLayout(5,1));
+
         mainPanel.setBackground(white);
 
             //Title Panel
             JPanel titlePanel = new JPanel();
+
             titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 45));
+
 
             JLabel titleLabel = new JLabel("Sign Up!");
             titleLabel.setFont(new Font("Dialog", Font.PLAIN, 60));
@@ -51,10 +56,13 @@ public class RegisterScreen extends JFrame implements FocusListener {
 
             //Username Panel
             JPanel usernamePanel = new JPanel();
+
             usernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 50));
+
 
             JLabel usernameLabel = new JLabel("Username:");
             usernameLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
 
             usernameTextField = new JTextField("Username");
             usernameTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -69,10 +77,12 @@ public class RegisterScreen extends JFrame implements FocusListener {
 
             //Password Panel
             JPanel passwordPanel = new JPanel();
+
             passwordPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 30));
 
             JLabel passwordLabel = new JLabel("Password:");
             passwordLabel.setFont(new Font("Dialog", Font.PLAIN, 30));
+
 
             passwordTextField = new JTextField("Password");
             passwordTextField.setFont(new Font("Dialog", Font.PLAIN, 30));
@@ -80,10 +90,12 @@ public class RegisterScreen extends JFrame implements FocusListener {
             passwordTextField.setForeground(Color.GRAY);
             passwordTextField.addFocusListener(this);
 
+
             passwordPanel.add(passwordLabel);
             passwordPanel.add(passwordTextField);
 
             mainPanel.add(passwordPanel);
+
 
             //Confirmation Panel
             JPanel confirmationPanel = new JPanel();
@@ -137,6 +149,7 @@ public class RegisterScreen extends JFrame implements FocusListener {
                 }else if(passwordTextField.getText().equals("")){
                     incorrectLabel.setText("Please enter a password");
                     incorrectLabel.setVisible(true);
+
                 //if confirmation is blank
                 }else if(confirmationTextField.getText().equals("")){
                     incorrectLabel.setText("Please enter a confirmation");
@@ -145,6 +158,7 @@ public class RegisterScreen extends JFrame implements FocusListener {
                 }else if(!(confirmationTextField.getText().equals(passwordTextField.getText()))){
                     incorrectLabel.setText("Please enter the same password in the password box as the confirmation box");
                     incorrectLabel.setVisible(true);
+
                 //if username is less than 8 characters
                 }else if(usernameTextField.getText().length() < 8){
                         incorrectLabel.setText("Username must be at least 8 characters long");
@@ -202,6 +216,7 @@ public class RegisterScreen extends JFrame implements FocusListener {
         return credentials;
     }
 
+
     @Override
     public void focusGained(FocusEvent e) {
         if (e.getSource() == passwordTextField) {
@@ -241,4 +256,5 @@ public class RegisterScreen extends JFrame implements FocusListener {
             }
         }
     }
+
 }
